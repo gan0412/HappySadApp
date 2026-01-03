@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useCallback, useState } from 'react';
-import { createEditor, Descendant, BaseEditor } from 'slate';
+import { createEditor, Descendant, BaseEditor, Transforms, Editor } from 'slate';
 import { Slate, Editable, withReact, ReactEditor, RenderLeafProps } from 'slate-react';
 import { withHistory } from 'slate-history';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -52,16 +52,29 @@ export function SlateEditor({ storageKey, mode }: SlateEditorProps) {
       if (textToRewrite) {
         rewriteText(textToRewrite, mode)
           .then((rewritten) => {
+            // Use Slate's Transforms API to properly update the editor
+            Transforms.delete(editor, {
+              at: {
+                anchor: Editor.start(editor, []),
+                focus: Editor.end(editor, []),
+              },
+            });
+
+            Transforms.insertNodes(editor, {
+              type: 'paragraph',
+              children: [{ text: rewritten }],
+            });
+
+            // Save the new content
             const newContent: Descendant[] = [{
               type: 'paragraph',
               children: [{ text: rewritten }],
             }];
             setValue(newContent);
-            editor.children = newContent;
-            editor.onChange();
           })
           .catch((error) => {
             console.error('Failed to rewrite:', error);
+            alert('Failed to rewrite text. Please check your API key and try again.');
           })
           .finally(() => {
             setIsRewriting(false);
