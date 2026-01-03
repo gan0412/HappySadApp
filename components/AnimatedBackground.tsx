@@ -35,11 +35,11 @@ export function AnimatedBackground() {
   }
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {emojis.map((item, index) => (
         <div
           key={index}
-          className="absolute animate-float opacity-20"
+          className="absolute animate-float"
           style={{
             left: `${item.left}%`,
             fontSize: `${item.size}px`,
@@ -50,29 +50,6 @@ export function AnimatedBackground() {
           {item.emoji}
         </div>
       ))}
-
-      <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(100vh) rotate(0deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.2;
-          }
-          90% {
-            opacity: 0.2;
-          }
-          100% {
-            transform: translateY(-100vh) rotate(360deg);
-            opacity: 0;
-          }
-        }
-
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
