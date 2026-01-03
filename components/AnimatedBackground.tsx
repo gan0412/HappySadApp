@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface FloatingEmoji {
   emoji: string;
@@ -11,18 +11,28 @@ interface FloatingEmoji {
 }
 
 export function AnimatedBackground() {
-  const emojis = useMemo(() => {
+  const [emojis, setEmojis] = useState<FloatingEmoji[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
     const faces = ['😊', '😢', '😃', '😔', '😄', '😞', '🙂', '☹️', '😁', '😟'];
     const count = 20; // Number of floating emojis
 
-    return Array.from({ length: count }, (_, i) => ({
+    const generatedEmojis = Array.from({ length: count }, (_, i) => ({
       emoji: faces[Math.floor(Math.random() * faces.length)],
       left: Math.random() * 100,
       duration: 15 + Math.random() * 20, // 15-35 seconds
       delay: Math.random() * 10, // 0-10 seconds delay
       size: 30 + Math.random() * 40, // 30-70px
     }));
+
+    setEmojis(generatedEmojis);
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
