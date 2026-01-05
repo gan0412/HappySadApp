@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 relative bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+      <AnimatedBackground />
       <div className="relative z-10">
         <h1 className="text-6xl font-bold mb-4 text-center bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
           Happy Sad Editor

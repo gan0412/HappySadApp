@@ -42,6 +42,7 @@ export function AnimatedBackground() {
           className="absolute animate-float"
           style={{
             left: `${item.left}%`,
+            bottom: '0',
             fontSize: `${item.size}px`,
             animationDuration: `${item.duration}s`,
             animationDelay: `${item.delay}s`,
