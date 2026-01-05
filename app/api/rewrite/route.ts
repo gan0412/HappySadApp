@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
           content: prompt,
         },
       ],
-      temperature: 0.7,
+      temperature: 0.2,
       max_tokens: 500,
     });
 
