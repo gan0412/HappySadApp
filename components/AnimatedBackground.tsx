@@ -46,6 +46,7 @@ export function AnimatedBackground() {
             fontSize: `${item.size}px`,
             animationDuration: `${item.duration}s`,
             animationDelay: `${item.delay}s`,
+            opacity: 0, // Start invisible, animation will fade them in
           }}
         >
           {item.emoji}
