@@ -23,7 +23,7 @@ export function AnimatedBackground() {
       emoji: faces[Math.floor(Math.random() * faces.length)],
       left: Math.random() * 100,
       duration: 15 + Math.random() * 20, // 15-35 seconds
-      delay: Math.random() * 10, // 0-10 seconds delay
+      delay: 0, // No delay - start immediately
       size: 30 + Math.random() * 40, // 30-70px
     }));
 
