@@ -1,26 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { SlateEditor } from "@/components/editor/SlateEditor";
-import { CollaborativeSlateEditor } from "@/components/editor/CollaborativeSlateEditor";
 
 export default function HappyPage() {
-  const [roomId, setRoomId] = useState("");
-  const [isCollaborating, setIsCollaborating] = useState(false);
-  const [currentRoomId, setCurrentRoomId] = useState("");
-
-  const handleStartCollaboration = () => {
-    if (roomId.trim()) {
-      setCurrentRoomId(roomId.trim());
-      setIsCollaborating(true);
-    }
-  };
-
-  const handleLeaveRoom = () => {
-    setIsCollaborating(false);
-    setCurrentRoomId("");
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-50 to-yellow-50 p-8">
@@ -42,6 +25,7 @@ export default function HappyPage() {
           </Link>
         </div>
 
+        {/* Collaboration UI - Currently disabled
         <div className="mb-6 bg-white p-4 rounded-lg shadow">
           <h3 className="font-semibold mb-2">Real-time Collaboration</h3>
           {!isCollaborating ? (
@@ -78,16 +62,9 @@ export default function HappyPage() {
             </div>
           )}
         </div>
+        */}
 
-        {isCollaborating ? (
-          <CollaborativeSlateEditor
-            storageKey={`happy-collab-${currentRoomId}`}
-            mode="happy"
-            roomId={currentRoomId}
-          />
-        ) : (
-          <SlateEditor storageKey="happy-editor-content" mode="happy" />
-        )}
+        <SlateEditor storageKey="happy-editor-content" mode="happy" />
       </div>
     </main>
   );

@@ -1,26 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { SlateEditor } from "@/components/editor/SlateEditor";
-import { CollaborativeSlateEditor } from "@/components/editor/CollaborativeSlateEditor";
 
 export default function SadPage() {
-  const [roomId, setRoomId] = useState("");
-  const [isCollaborating, setIsCollaborating] = useState(false);
-  const [currentRoomId, setCurrentRoomId] = useState("");
-
-  const handleStartCollaboration = () => {
-    if (roomId.trim()) {
-      setCurrentRoomId(roomId.trim());
-      setIsCollaborating(true);
-    }
-  };
-
-  const handleLeaveRoom = () => {
-    setIsCollaborating(false);
-    setCurrentRoomId("");
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-8">
@@ -42,6 +25,7 @@ export default function SadPage() {
           </Link>
         </div>
 
+        {/* Collaboration UI - Currently disabled
         <div className="mb-6 bg-white p-4 rounded-lg shadow">
           <h3 className="font-semibold mb-2">Real-time Collaboration</h3>
           {!isCollaborating ? (
@@ -78,16 +62,9 @@ export default function SadPage() {
             </div>
           )}
         </div>
+        */}
 
-        {isCollaborating ? (
-          <CollaborativeSlateEditor
-            storageKey={`sad-collab-${currentRoomId}`}
-            mode="sad"
-            roomId={currentRoomId}
-          />
-        ) : (
-          <SlateEditor storageKey="sad-editor-content" mode="sad" />
-        )}
+        <SlateEditor storageKey="sad-editor-content" mode="sad" />
       </div>
     </main>
   );
