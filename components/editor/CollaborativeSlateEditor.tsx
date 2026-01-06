@@ -9,13 +9,22 @@ import { initialValue } from '@/lib/plate-config';
 import { EmotionLeaf } from './EmotionLeaf';
 import { useAI } from '@/hooks/useAI';
 import { createCollaborationProvider, disconnectCollaboration } from '@/lib/collaboration';
+import { FormattingToolbar } from './FormattingToolbar';
 import * as Y from 'yjs';
 
 declare module 'slate' {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor;
     Element: { type: string; children: Descendant[] };
-    Text: { text: string; emotion?: string };
+    Text: {
+      text: string;
+      emotion?: string;
+      bold?: boolean;
+      italic?: boolean;
+      underline?: boolean;
+      strikethrough?: boolean;
+      code?: boolean;
+    };
   }
 }
 
@@ -138,7 +147,25 @@ export function CollaborativeSlateEditor({ storageKey, mode, roomId }: Collabora
   }, []);
 
   const renderLeaf = useCallback((props: RenderLeafProps) => {
-    return <EmotionLeaf {...props} />;
+    let { children } = props;
+
+    if (props.leaf.bold) {
+      children = <strong>{children}</strong>;
+    }
+    if (props.leaf.italic) {
+      children = <em>{children}</em>;
+    }
+    if (props.leaf.underline) {
+      children = <u>{children}</u>;
+    }
+    if (props.leaf.strikethrough) {
+      children = <s>{children}</s>;
+    }
+    if (props.leaf.code) {
+      children = <code className="bg-gray-100 px-1 rounded text-sm font-mono">{children}</code>;
+    }
+
+    return <EmotionLeaf {...props}>{children}</EmotionLeaf>;
   }, []);
 
   if (isLoading) {

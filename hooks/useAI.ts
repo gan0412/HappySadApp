@@ -9,7 +9,7 @@ export function useAI() {
   const rewriteText = async (text: string, mode: 'happy' | 'sad'): Promise<string> => {
     setIsLoading(true);
     setError(null);
-
+  
     try {
       const response = await fetch('/api/rewrite', {
         method: 'POST',
